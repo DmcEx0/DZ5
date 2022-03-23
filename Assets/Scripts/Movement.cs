@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float _speed;
+
+    private bool _isMovingRight;
+    private bool _isMovingLeft;
 
     private Animator _animator;
 
@@ -15,15 +16,23 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        bool isMovingRight = Input.GetKey(KeyCode.D);
-        bool isMovingLeft = Input.GetKey(KeyCode.A);
+        _isMovingRight = Input.GetKey(KeyCode.D);
+        _isMovingLeft = Input.GetKey(KeyCode.A);
 
-        _animator.SetBool("isMove", isMovingRight || isMovingLeft);
+        float yDirection = 0;
+        float zDirection = 0;
 
-        if (isMovingRight)
-            transform.Translate(_speed * Time.deltaTime, 0, 0);
+        Move();
 
-        if (isMovingLeft)
-            transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
+        if (_isMovingRight)
+            transform.Translate(_speed * Time.deltaTime, yDirection, zDirection);
+
+        if (_isMovingLeft)
+            transform.Translate(_speed * Time.deltaTime * -1, yDirection, zDirection);
+    }
+
+    private void Move()
+    {
+        _animator.SetBool("isMove", _isMovingRight || _isMovingLeft);
     }
 }
