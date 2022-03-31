@@ -1,11 +1,15 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
+
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
     private bool _isMovingRight;
     private bool _isMovingLeft;
+
+    private const string _isMove = "isMove";
 
     private Animator _animator;
 
@@ -33,6 +37,6 @@ public class Movement : MonoBehaviour
 
     private void Move()
     {
-        _animator.SetBool("isMove", _isMovingRight || _isMovingLeft);
+        _animator.SetBool(_isMove, _isMovingRight || _isMovingLeft);
     }
 }

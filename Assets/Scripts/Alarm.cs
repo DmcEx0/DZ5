@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+
 public class Alarm : MonoBehaviour
 {
     private float _valueOfTarget;
@@ -8,6 +10,7 @@ public class Alarm : MonoBehaviour
 
     private Coroutine _changingSound;
     private AudioSource _audio;
+
     private void Start()
     {
         _audio = GetComponent<AudioSource>();
