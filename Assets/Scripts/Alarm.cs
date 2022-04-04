@@ -6,7 +6,7 @@ using UnityEngine;
 public class Alarm : MonoBehaviour
 {
     private float _valueOfTarget;
-    private bool _isStartCorutine;
+    private bool _isActivationCoroutine;
 
     private Coroutine _changingSound;
     private AudioSource _audio;
@@ -22,13 +22,11 @@ public class Alarm : MonoBehaviour
         float maxValue = 1f;
 
         var waitForSecond = new WaitForSeconds(0.01f);
-        var volume = _audio.volume;
         float maxDelta = 2f;
 
-        while (_isStartCorutine)
+        while (_isActivationCoroutine)
         {
-            volume = Mathf.MoveTowards(volume, _valueOfTarget, maxDelta * Time.deltaTime);
-            _audio.volume = volume;
+            _audio.volume = Mathf.MoveTowards(_audio.volume, _valueOfTarget, maxDelta * Time.deltaTime);
 
             if (_audio.volume == maxValue)
                 _valueOfTarget = minValue;
@@ -40,16 +38,16 @@ public class Alarm : MonoBehaviour
         }
     }
 
-    public void StartChangeSound()
+    public void TurnOn()
     {
-        _isStartCorutine = true;
+        _isActivationCoroutine = true;
         _changingSound = StartCoroutine(ChangeSound());
         _audio.Play();
     }
 
-    public void StopChangeSound()
+    public void TurnOff()
     {
-        _isStartCorutine = false;
+        _isActivationCoroutine = false;
         StopCoroutine(_changingSound);
         _audio.Stop();
     }
